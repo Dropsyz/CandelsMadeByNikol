@@ -16,7 +16,6 @@ public class CategoryEntity extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    // Връзка към свещите, но без да я зареждаме веднага (Lazy)
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private Set<CandleEntity> candles;
 }
