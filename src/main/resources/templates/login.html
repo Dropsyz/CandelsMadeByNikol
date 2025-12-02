@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - CandelsMadeByNikol</title>
+</head>
+<body>
+
+<h1>Login</h1>
+
+<div th:if="${param.error}" style="color: red">
+    Invalid username or password.
+</div>
+
+<div th:if="${param.logout}" style="color: green">
+    You have been logged out.
+</div>
+
+<form th:action="@{/login}" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"/> </div>
+
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"/> </div>
+
+    <button type="submit">Sign In</button>
+</form>
+
+<a th:href="@{/register}">No account? Register here.</a>
+
+</body>
+</html>

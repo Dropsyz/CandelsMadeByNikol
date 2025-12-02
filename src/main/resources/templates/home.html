@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Candle Shop Home</title>
+</head>
+<body>
+
+<h1>Welcome to CandelsMadeByNikol!</h1>
+
+<div sec:authorize="isAuthenticated()">
+    <h2>Hello, <span sec:authentication="name">User</span>!</h2>
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <a href="/candles/add">Add New Candle</a> (Admin only)
+    </div>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+
+<div sec:authorize="!isAuthenticated()">
+    <a th:href="@{/login}">Login</a> | <a th:href="@{/register}">Register</a>
+</div>
+
+</body>
+</html>

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleEntity extends BaseEntity{
+public class RoleEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
