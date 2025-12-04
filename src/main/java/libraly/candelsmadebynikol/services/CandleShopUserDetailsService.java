@@ -1,5 +1,6 @@
 package libraly.candelsmadebynikol.services;
 
+import jakarta.transaction.Transactional;
 import libraly.candelsmadebynikol.common.exceptions.ExceptionMessages;
 import libraly.candelsmadebynikol.models.entity.RoleEntity;
 import libraly.candelsmadebynikol.models.entity.UserEntity;
@@ -28,6 +29,7 @@ public class CandleShopUserDetailsService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
 
         return userRepository.findByUsername(username)

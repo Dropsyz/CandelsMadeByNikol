@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         UserEntity newUser = UserEntity.builder()
                 .username(registrationDTO.getUsername())
                 .email(registrationDTO.getEmail())
-                .password(registrationDTO.getPassword())
+                .password(encodedPassword)
                 .roles(Set.of(useRole))
                 .build();
 
