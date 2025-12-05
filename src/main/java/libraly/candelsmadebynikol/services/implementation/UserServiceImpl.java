@@ -1,10 +1,11 @@
-package libraly.candelsmadebynikol.services;
+package libraly.candelsmadebynikol.services.implementation;
 
 import libraly.candelsmadebynikol.models.dto.UserRegistrationDTO;
 import libraly.candelsmadebynikol.models.entity.UserEntity;
 import libraly.candelsmadebynikol.models.enums.UserRoleEnum;
 import libraly.candelsmadebynikol.repository.RoleRepository;
 import libraly.candelsmadebynikol.repository.UserRepository;
+import libraly.candelsmadebynikol.services.interfaces.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

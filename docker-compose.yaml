@@ -5,16 +5,28 @@ services:
     ports:
       - "3306:3306"
     environment:
-
       MYSQL_DATABASE: candles_db
-
       MYSQL_USER: dropsy
       MYSQL_PASSWORD: topsecret
-
       MYSQL_ROOT_PASSWORD: 123456
     volumes:
       - mysql-data:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
 
+  orders-mysql:
+    image: mysql:8.0
+    container_name: orders-service-mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: orders_db
+      MYSQL_USER: dropsy
+      MYSQL_PASSWORD: topsecret
+      MYSQL_ROOT_PASSWORD: 123456
+    volumes:
+      - orders-mysql-data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
 volumes:
   mysql-data:
+  orders-mysql-data:

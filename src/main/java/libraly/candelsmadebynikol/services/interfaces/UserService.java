@@ -1,4 +1,4 @@
-package libraly.candelsmadebynikol.services;
+package libraly.candelsmadebynikol.services.interfaces;
 
 import libraly.candelsmadebynikol.models.dto.UserRegistrationDTO;
 

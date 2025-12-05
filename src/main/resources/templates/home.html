@@ -3,25 +3,89 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Candle Shop Home</title>
+    <style>
+        .candle-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .candle-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .candle-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .price {
+            font-weight: bold;
+            color: green;
+        }
+    </style>
 </head>
 <body>
 
 <h1>Welcome to CandelsMadeByNikol!</h1>
 
 <div sec:authorize="isAuthenticated()">
-    <h2>Hello, <span sec:authentication="name">User</span>!</h2>
-
-    <div sec:authorize="hasRole('ADMIN')">
-        <a href="/candles/add">Add New Candle</a> (Admin only)
-    </div>
-
-    <form th:action="@{/logout}" method="post">
+    <p>Hello, <span sec:authentication="name">User</span>!</p>
+    <form th:action="@{/logout}" method="post" style="display:inline;">
         <button type="submit">Logout</button>
     </form>
+
+    <div sec:authorize="hasRole('ADMIN')" style="margin-top: 10px;">
+        <a th:href="@{/candles/add}" style="background-color: #4CAF50; color: white; padding: 10px; text-decoration: none;">Add New Candle</a>
+    </div>
 </div>
 
 <div sec:authorize="!isAuthenticated()">
     <a th:href="@{/login}">Login</a> | <a th:href="@{/register}">Register</a>
+</div>
+
+<hr>
+
+<h2>Our Collection</h2>
+
+<div th:if="${candles.isEmpty()}">
+    <p>No candles available yet. Admin, please add some!</p>
+</div>
+
+<div class="candle-container">
+    <div th:each="candle : ${candles}" class="candle-card">
+        <div class="candle-container">
+            <div th:each="candle : ${candles}" class="candle-card">
+                <img th:src="${candle.imageUrl}" alt="Candle Image" style="width: 100%; border-radius: 5px;">
+                <h3 th:text="${candle.name}">Candle Name</h3>
+                <p class="price" th:text="${candle.price} + ' BGN'">Price</p>
+
+                <div sec:authorize="hasRole('ADMIN')" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee;">
+
+                    <a th:href="@{/candles/edit/{id}(id=${candle.id})}"
+                       style="background-color: #2196F3; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; margin-right: 5px; font-size: 0.9em;">
+                        Edit
+                    </a>
+
+                    <form th:action="@{/candles/delete/{id}(id=${candle.id})}" method="post" style="display:inline;"
+                          onsubmit="return confirm('Are you sure you want to delete this candle?');">
+                        <button type="submit"
+                                style="background-color: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.9em;">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+</div>
+<div sec:authorize="hasRole('ADMIN')" style="margin-top: 10px;">
+    <a th:href="@{/candles/add}">Add New Candle</a> |
+    <a th:href="@{/categories/add}">Add New Category</a>
 </div>
 
 </body>

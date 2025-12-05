@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
 import static libraly.candelsmadebynikol.common.messages.RequiredMessages.*;
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -18,8 +20,8 @@ public class AddCandleDTO {
     @NotNull(message = PRICE_REQUIRED)
     @Positive(message = PRICE_POSITIVE_REQUIRED)
     private BigDecimal price;
-    @NotBlank(message = IMAGE_REQUIRED)
-    private String imageURL;
+    private MultipartFile image;
+    private String imageUrl;
     @NotBlank(message = SKU_REQUIRED)
     private String sku;
     @NotNull(message = CATEGORY_REQUIRED)

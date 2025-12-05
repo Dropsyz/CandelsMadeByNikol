@@ -2,7 +2,7 @@ package libraly.candelsmadebynikol.web.conttrolers;
 
 import jakarta.validation.Valid;
 import libraly.candelsmadebynikol.models.dto.UserRegistrationDTO;
-import libraly.candelsmadebynikol.services.UserService;
+import libraly.candelsmadebynikol.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

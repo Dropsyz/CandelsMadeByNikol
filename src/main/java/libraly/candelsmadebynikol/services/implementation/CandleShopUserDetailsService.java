@@ -1,7 +1,6 @@
-package libraly.candelsmadebynikol.services;
+package libraly.candelsmadebynikol.services.implementation;
 
 import jakarta.transaction.Transactional;
-import libraly.candelsmadebynikol.common.exceptions.ExceptionMessages;
 import libraly.candelsmadebynikol.models.entity.RoleEntity;
 import libraly.candelsmadebynikol.models.entity.UserEntity;
 import libraly.candelsmadebynikol.repository.UserRepository;
