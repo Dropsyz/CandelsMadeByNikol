@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Orders</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .status-new { color: blue; font-weight: bold; }
+        .status-shipped { color: green; font-weight: bold; }
+        .btn-update { background-color: #007bff; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px;}
+    </style>
+</head>
+<body>
+
+<h1>Manage Orders (Admin)</h1>
+<a th:href="@{/static}">Back to Home</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>User ID</th>
+        <th>Total Price</th>
+        <th>Current Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}">ID</td>
+        <td th:text="${order.userId}">User</td>
+        <td th:text="${order.price} + ' BGN'">Price</td>
+        <td>
+                <span th:text="${order.status}"
+                      th:classappend="${order.status == 'NEW' ? 'status-new' : 'status-shipped'}">
+                </span>
+        </td>
+        <td>
+            <form th:action="@{/admin/orders/status/{id}(id=${order.id})}" method="post">
+                <select name="status">
+                    <option value="NEW" th:selected="${order.status == 'NEW'}">NEW</option>
+                    <option value="PROCESSING" th:selected="${order.status == 'PROCESSING'}">PROCESSING</option>
+                    <option value="SHIPPED" th:selected="${order.status == 'SHIPPED'}">SHIPPED</option>
+                    <option value="DELIVERED" th:selected="${order.status == 'DELIVERED'}">DELIVERED</option>
+                </select>
+                <button type="submit" class="btn-update">Update</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
