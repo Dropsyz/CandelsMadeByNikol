@@ -1,85 +1,97 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Edit Candle</title>
-    <style>
-        .error-message { color: red; font-size: 0.9em; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; }
-        .current-image {
-            max-width: 200px;
-            border: 1px solid #ccc;
-            padding: 5px;
-            border-radius: 5px;
-            display: block;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
+<head th:replace="~{fragments/commons::head('Edit Candle')}"></head>
 
-<h1>Edit Candle</h1>
+<body class="d-flex flex-column min-vh-100 bg-light">
 
-<form th:action="@{/candles/edit/{id}(id=${candleId})}"
-      th:object="${addCandleDTO}"
-      method="post"
-      enctype="multipart/form-data">
+<nav th:replace="~{fragments/commons::nav}"></nav>
 
-    <div class="form-group">
-        <label for="candleName">Candle Name:</label>
-        <input type="text" id="candleName" th:field="*{candleName}"/>
-        <p class="error-message" th:if="${#fields.hasErrors('candleName')}" th:errors="*{candleName}"></p>
-    </div>
+<main class="container my-5 flex-grow-1">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h4 class="mb-0">Edit Candle Details</h4>
+                </div>
 
-    <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" th:field="*{description}" rows="4" cols="50"></textarea>
-        <p class="error-message" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
-    </div>
+                <div class="card-body p-4">
+                    <form th:action="@{/candles/edit/{id}(id=${candleId})}"
+                          th:object="${addCandleDTO}"
+                          method="post"
+                          enctype="multipart/form-data">
 
-    <div class="form-group">
-        <label for="price">Price:</label>
-        <input type="number" id="price" th:field="*{price}" step="0.01" min="0"/>
-        <p class="error-message" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
-    </div>
+                        <div class="mb-3">
+                            <label for="candleName" class="form-label fw-bold">Candle Name</label>
+                            <input type="text" id="candleName" th:field="*{candleName}" class="form-control"
+                                   th:classappend="${#fields.hasErrors('candleName')} ? 'is-invalid'"/>
+                            <div class="invalid-feedback" th:errors="*{candleName}">Name Error</div>
+                        </div>
 
-    <div class="form-group">
-        <label>Current Image:</label>
+                        <div class="mb-3">
+                            <label for="description" class="form-label fw-bold">Description</label>
+                            <textarea id="description" th:field="*{description}" class="form-control" rows="4"
+                                      th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"></textarea>
+                            <div class="invalid-feedback" th:errors="*{description}">Description Error</div>
+                        </div>
 
-        <div th:if="*{imageUrl != null}">
-            <img th:src="*{imageUrl}" alt="Current Candle Image" class="current-image">
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label for="price" class="form-label fw-bold">Price</label>
+                                <div class="input-group">
+                                    <input type="number" step="0.01" id="price" th:field="*{price}" class="form-control"
+                                           th:classappend="${#fields.hasErrors('price')} ? 'is-invalid'"/>
+                                    <span class="input-group-text">BGN</span>
+                                    <div class="invalid-feedback" th:errors="*{price}">Price Error</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="sku" class="form-label fw-bold">SKU</label>
+                                <input type="text" id="sku" th:field="*{sku}" class="form-control"
+                                       th:classappend="${#fields.hasErrors('sku')} ? 'is-invalid'"/>
+                                <div class="invalid-feedback" th:errors="*{sku}">SKU Error</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="category" class="form-label fw-bold">Category</label>
+                            <select id="category" th:field="*{categoryId}" class="form-select"
+                                    th:classappend="${#fields.hasErrors('categoryId')} ? 'is-invalid'">
+                                <option value="">-- Select Category --</option>
+                                <option th:each="cat : ${categories}"
+                                        th:value="${cat.id}"
+                                        th:text="${cat.name}">Category Name</option>
+                            </select>
+                            <div class="invalid-feedback" th:errors="*{categoryId}">Category Error</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Product Image</label>
+
+                            <div th:if="*{imageUrl != null}" class="d-flex align-items-center mb-2 p-2 border rounded bg-white">
+                                <img th:src="*{imageUrl}" alt="Current Candle" class="rounded me-3"
+                                     style="width: 60px; height: 60px; object-fit: cover;">
+                                <span class="text-muted small">Current image loaded</span>
+                            </div>
+
+                            <label for="image" class="form-label text-muted small">Upload new to replace:</label>
+                            <input type="file" id="image" th:field="*{image}" class="form-control" accept="image/png, image/jpeg"
+                                   th:classappend="${#fields.hasErrors('image')} ? 'is-invalid'"/>
+                            <div class="invalid-feedback" th:errors="*{image}">Image Error</div>
+                        </div>
+
+                        <div class="d-flex justify-content-between pt-2">
+                            <a th:href="@{/}" class="btn btn-outline-secondary px-4">Cancel</a>
+                            <button type="submit" class="btn btn-primary px-4 fw-bold">Save Changes</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
         </div>
-        <div th:if="*{imageUrl == null}">
-            <p>No image uploaded yet.</p>
-        </div>
-
-        <label for="image">Change Image (Leave empty to keep current):</label>
-        <input type="file" id="image" th:field="*{image}" accept="image/png, image/jpeg"/>
-        <p class="error-message" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></p>
     </div>
+</main>
 
-    <div class="form-group">
-        <label for="sku">SKU (Stock Keeping Unit):</label>
-        <input type="text" id="sku" th:field="*{sku}"/>
-        <p class="error-message" th:if="${#fields.hasErrors('sku')}" th:errors="*{sku}"></p>
-    </div>
-
-    <div class="form-group">
-        <label for="category">Category:</label>
-        <select id="category" th:field="*{categoryId}">
-            <option value="">-- Select Category --</option>
-            <option th:each="cat : ${categories}"
-                    th:value="${cat.id}"
-                    th:text="${cat.name}">Category Name</option>
-        </select>
-        <p class="error-message" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}"></p>
-    </div>
-
-    <button type="submit">Update Candle</button>
-</form>
-
-<br>
-<a th:href="@{/}">Back to Home</a>
+<footer th:replace="~{fragments/commons::footer}"></footer>
 
 </body>
 </html>
