@@ -1,4 +1,4 @@
-package libraly.candelsmadebynikol.web;
+package libraly.candelsmadebynikol;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
