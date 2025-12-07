@@ -5,8 +5,6 @@ import libraly.candelsmadebynikol.models.enums.UserRoleEnum;
 import libraly.candelsmadebynikol.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import javax.management.relation.Role;
 import java.util.Arrays;
 
 @Component
