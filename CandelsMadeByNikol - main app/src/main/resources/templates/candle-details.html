@@ -12,6 +12,12 @@
                  class="img-fluid rounded shadow" alt="Candle Image">
         </div>
 
+        <div sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/candles/edit/{id}(id=${candle.id})}" class="btn btn-outline-primary btn-lg">Edit</a>
+            <form th:action="@{/candles/delete/{id}(id=${candle.id})}" method="delete" class="d-inline">
+                <button type="submit" class="btn btn-outline-danger btn-lg" onclick="return confirm('Are you sure?')">Delete</button>
+            </form>
+        </div>
         <div class="col-md-6">
             <h1 th:text="${candle.name}">Candle Name</h1>
             <h3 class="text-success my-3" th:text="${candle.price} + ' BGN'">Price</h3>
@@ -75,6 +81,7 @@
 
                         <button type="submit" class="btn btn-primary">Submit Review</button>
                     </form>
+
                 </div>
             </div>
         </div>

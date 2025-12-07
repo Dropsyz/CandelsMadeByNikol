@@ -2,6 +2,7 @@ package libraly.candelsmadebynikol.web.conttrolers;
 
 import jakarta.validation.Valid;
 import libraly.candelsmadebynikol.models.dto.AddCandleDTO;
+import libraly.candelsmadebynikol.models.dto.AddReviewDTO;
 import libraly.candelsmadebynikol.repository.CandleRepository;
 import libraly.candelsmadebynikol.repository.CategoryRepository;
 import libraly.candelsmadebynikol.services.implementation.ReviewServiceImpl;
@@ -116,12 +117,14 @@ public class CandleController {
                 .orElseThrow(() -> new IllegalArgumentException("Candle not found"));
 
         model.addAttribute("candle", candle);
-        model.addAttribute("addReviewDTO", new libraly.candelsmadebynikol.models.dto.AddReviewDTO()); // За формата
+
+        if (!model.containsAttribute("addReviewDTO")) {
+            model.addAttribute("addReviewDTO", new AddReviewDTO());
+        }
 
         return "candle-details";
     }
 
-    // 2. Обработва добавянето на ревю
     @PostMapping("/details/{id}/add-review")
     @PreAuthorize("isAuthenticated()")
     public String addReview(@PathVariable("id") UUID id,
