@@ -20,7 +20,6 @@ public class AdminOrderController {
         this.orderServiceClient = orderServiceClient;
     }
 
-    // Показва всички поръчки
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public String manageOrders(Model model) {
@@ -29,7 +28,7 @@ public class AdminOrderController {
         return "admin-orders";
     }
 
-    // Сменя статуса
+
     @PostMapping("/status/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public String updateStatus(@PathVariable("id") UUID id, @RequestParam("status") String status) {

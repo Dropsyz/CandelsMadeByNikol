@@ -1,0 +1,164 @@
+/* --- 1. Fonts & Variables --- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+
+:root {
+    /* ТВОЯТА ЦВЕТОВА ГАМА (Промени кодовете тук, ако не съвпадат) */
+    --primary-color: #8D7B68;    /* Тъмно бежово/Кафяво - Основен цвят */
+    --secondary-color: #A4907C;  /* По-светло кафяво - За акценти */
+    --accent-color: #C8B6A6;     /* Още по-светло - За ховър ефекти */
+    --background-color: #F9F7F2; /* Много светло крем - Фон на сайта */
+    --text-color: #333333;       /* Тъмно сиво - Текст */
+    --white: #ffffff;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Мека сянка */
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* --- 2. Navbar Styling --- */
+.navbar {
+    background-color: var(--white) !important;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--primary-color) !important;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    color: var(--text-color) !important;
+    font-weight: 500;
+    margin-left: 15px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+/* --- 3. Buttons (Hover Effects) --- */
+.btn {
+    border-radius: 30px; /* Заоблени бутони */
+    padding: 10px 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary, .btn-success {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover, .btn-success:hover {
+    background-color: var(--secondary-color); /* Смяна на нюанса */
+    transform: translateY(-3px); /* Леко повдигане */
+    box-shadow: 0 5px 15px rgba(141, 123, 104, 0.4); /* Сянка в цвета на бутона */
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+/* --- 4. Cards (Glassmorphism effect) --- */
+.card {
+    border: none;
+    border-radius: 15px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+.card-img-top {
+    height: 280px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05); /* Леко зуумване на снимката при ховър */
+}
+
+/* --- 5. VERTICAL SLIDER (Marquee) --- */
+.slider-wrapper {
+    height: 500px; /* Височина на "прозореца" */
+    overflow: hidden;
+    position: relative;
+    /* Градиент отгоре и отдолу, за да изглежда че изчезват плавно */
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+}
+
+.slider-track {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Анимацията */
+    animation: scrollVertical 15s linear infinite;
+}
+
+/* Спиране на анимацията при мишка върху елемент */
+.slider-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scrollVertical {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+    /* ВАЖНО: В HTML трябва да дублираме списъка с продукти, за да е гладко */
+}
+
+/* --- 6. Hero Section (Банер) --- */
+.hero-section {
+    padding: 80px 0;
+    text-align: center;
+    background-color: var(--background-color);
+    margin-bottom: 40px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+}
+
+/* --- 7. Forms --- */
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(141, 123, 104, 0.2);
+    border-color: var(--primary-color);
+}
