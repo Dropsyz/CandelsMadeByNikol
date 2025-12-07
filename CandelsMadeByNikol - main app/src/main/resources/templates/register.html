@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<nav th:replace="~{fragments/commons::nav}"></nav>
+
+<div class="container">
+    <div class="card auth-card shadow" style="max-width: 500px;">
+        <div class="card-header bg-success text-white text-center">
+            <h3>Register</h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/register}" th:object="${registrationDTO}" method="post">
+
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" th:field="*{username}" class="form-control"
+                           th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{username}">Error</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" th:field="*{email}" class="form-control"
+                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{email}">Error</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" th:field="*{password}" class="form-control"
+                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{password}">Error</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" th:field="*{confirmPassword}" class="form-control"
+                           th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"/>
+                    <div class="invalid-feedback" th:errors="*{confirmPassword}">Error</div>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">Register</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-center">
+            <small>Already registered? <a th:href="@{/login}">Login here</a></small>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

@@ -23,29 +23,31 @@ public class OrderService {
 
     public void createOrder(OrderDTO orderDTO) {
         OrderEntity order = new OrderEntity();
+
         order.setUserId(orderDTO.getUserId());
+        order.setCandleId(orderDTO.getCandleId());
+        order.setShippingAddress(orderDTO.getShippingAddress());
         order.setTotalPrice(orderDTO.getPrice());
+
         order.setOrderDate(LocalDateTime.now());
         order.setStatus("NEW");
 
         orderRepository.save(order);
-        System.out.println("ORDER RECEIVED: " + orderDTO);
+        System.out.println("ORDER SAVED SUCCESSFULY: " + orderDTO);
     }
-    // 1. Взимане на поръчките на конкретен потребител
+
     public List<OrderDTO> getUserOrders(UUID userId) {
         return orderRepository.findAllByUserId(userId).stream()
-                .map(this::mapToDTO) // Трябва да си направиш mapToDTO метод
+                .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
 
-    // 2. Взимане на ВСИЧКИ поръчки (за Админа)
     public List<OrderDTO> getAllOrders() {
         return orderRepository.findAll().stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
 
-    // 3. Промяна на статус (ВТОРАТА ВАЛИДНА ФУНКЦИОНАЛНОСТ)
     public void updateStatus(UUID orderId, String newStatus) {
         OrderEntity order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found"));
@@ -53,12 +55,12 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-
     private OrderDTO mapToDTO(OrderEntity entity) {
         OrderDTO dto = new OrderDTO();
-        dto.setUserId(entity.getId());
         dto.setId(entity.getId());
         dto.setUserId(entity.getUserId());
+        dto.setCandleId(entity.getCandleId());
+        dto.setShippingAddress(entity.getShippingAddress());
         dto.setPrice(entity.getTotalPrice());
         dto.setStatus(entity.getStatus());
         dto.setOrderDate(entity.getOrderDate());

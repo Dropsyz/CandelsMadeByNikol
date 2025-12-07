@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<nav th:replace="~{fragments/commons::nav}"></nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img th:src="${candle.imageUrl != null ? candle.imageUrl : '/images/default-candle.png'}"
+                 class="img-fluid rounded shadow" alt="Candle Image">
+        </div>
+
+        <div class="col-md-6">
+            <h1 th:text="${candle.name}">Candle Name</h1>
+            <h3 class="text-success my-3" th:text="${candle.price} + ' BGN'">Price</h3>
+            <p class="lead" th:text="${candle.description}">Description...</p>
+            <p class="text-muted">SKU: <span th:text="${candle.sku}"></span></p>
+
+            <form sec:authorize="isAuthenticated()" th:action="@{/shop/buy/{id}(id=${candle.id})}" method="post" class="mt-4">
+                <button type="submit" class="btn btn-lg btn-success w-100">🛒 Buy Now</button>
+            </form>
+
+            <div sec:authorize="!isAuthenticated()" class="mt-4">
+                <a th:href="@{/login}" class="btn btn-lg btn-outline-primary w-100">Login to Buy</a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h3>⭐ Reviews</h3>
+
+            <div th:if="${candle.reviews.isEmpty()}" class="alert alert-light text-center">
+                No reviews yet. Be the first to write one!
+            </div>
+
+            <div class="card mb-3" th:each="review : ${candle.reviews}">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <span th:text="${review.author.username}">User</span>
+                        <span class="text-warning float-end">
+                            <span th:each="i : ${#numbers.sequence(1, review.rating)}">★</span>
+                        </span>
+                    </h5>
+                    <p class="card-text" th:text="${review.text}">Review text...</p>
+                </div>
+            </div>
+
+            <div sec:authorize="isAuthenticated()" class="card bg-light mt-4">
+                <div class="card-body">
+                    <h5>Write a Review</h5>
+                    <form th:action="@{/candles/details/{id}/add-review(id=${candle.id})}"
+                          th:object="${addReviewDTO}" method="post">
+
+                        <div class="mb-3">
+                            <label class="form-label">Rating</label>
+                            <select th:field="*{rating}" class="form-select">
+                                <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
+                                <option value="4">⭐⭐⭐⭐ (Good)</option>
+                                <option value="3">⭐⭐⭐ (Average)</option>
+                                <option value="2">⭐⭐ (Poor)</option>
+                                <option value="1">⭐ (Terrible)</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Your Review</label>
+                            <textarea th:field="*{text}" class="form-control" rows="3" placeholder="Share your thoughts..."></textarea>
+                            <div class="text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

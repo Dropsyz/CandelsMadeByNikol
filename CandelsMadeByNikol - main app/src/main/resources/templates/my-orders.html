@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<nav th:replace="~{fragments/commons::nav}"></nav>
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">My Orders</h2>
+
+    <div th:if="${orders.isEmpty()}" class="alert alert-info text-center">
+        You haven't placed any orders yet. <a th:href="@{/}" class="alert-link">Go Shopping!</a>
+    </div>
+
+    <div th:unless="${orders.isEmpty()}" class="table-responsive">
+        <table class="table table-hover table-striped shadow-sm">
+            <thead class="table-dark">
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Total Price</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${order.price} + ' BGN'"></td>
+                <td>
+                        <span th:text="${order.status}" class="badge"
+                              th:classappend="${order.status == 'NEW' ? 'bg-primary' : (order.status == 'SHIPPED' ? 'bg-success' : 'bg-secondary')}">
+                        </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

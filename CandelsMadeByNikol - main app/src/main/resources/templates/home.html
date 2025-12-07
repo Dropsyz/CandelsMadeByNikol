@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+
+<nav th:replace="~{fragments/commons::nav}"></nav>
+
+<div class="container-fluid"> <div class="text-center mb-4">
+    <h1 class="display-4" style="font-weight: 700;">Our Collection</h1>
+</div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4"> <div class="slider-container">
+            <div class="slider-track">
+
+                <div th:each="candle : ${candles}" class="card shadow-sm mb-3">
+                    <a th:href="@{/candles/details/{id}(id=${candle.id})}">
+                        <img th:src="${candle.imageUrl != null ? candle.imageUrl : '/images/default-candle.png'}"
+                             class="card-img-top" alt="Candle Image"
+                             style="height: 300px; object-fit: cover;">
+                    </a>
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title" th:text="${candle.name}">Name</h5>
+                        <p class="text-success fw-bold" th:text="${candle.price} + ' BGN'">Price</p>
+                        <a th:href="@{/candles/details/{id}(id=${candle.id})}" class="btn btn-primary btn-sm">Details</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

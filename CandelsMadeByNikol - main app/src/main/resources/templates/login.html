@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<nav th:replace="~{fragments/commons::nav}"></nav>
+
+<div class="container">
+    <div class="card auth-card shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>Login</h3>
+        </div>
+        <div class="card-body">
+            <div th:if="${param.error}" class="alert alert-danger text-center">
+                Invalid username or password.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success text-center">
+                Logged out successfully.
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" required autofocus/>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required/>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-center">
+            <small>Don't have an account? <a th:href="@{/register}">Register here</a></small>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

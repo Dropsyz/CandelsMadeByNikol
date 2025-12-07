@@ -21,9 +21,15 @@ public class OrderEntity {
     @Column(nullable = false)
     private LocalDateTime orderDate;
 
-
     @Column(nullable = false)
     private UUID userId;
+
+    @Column(nullable = false)
+    private UUID candleId;
+
+    @Column(nullable = false)
+    private String shippingAddress;
+
 
     @Column(nullable = false)
     private BigDecimal totalPrice;

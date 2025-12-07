@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons::head}"></head>
+<body>
+<nav th:replace="~{fragments/commons::nav}"></nav>
+
+<div class="container text-center mt-5">
+    <div class="display-1 text-danger">500</div>
+    <h1 class="display-4">Internal Server Error</h1>
+    <p class="lead">We are sorry, but something went wrong on our end.</p>
+    <p class="text-muted" th:text="${message}">Error details...</p>
+    <a th:href="@{/}" class="btn btn-secondary btn-lg mt-3">Back to Safety</a>
+</div>
+
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>
