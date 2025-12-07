@@ -24,9 +24,9 @@ public class ShopController {
     }
 
     @PostMapping("/buy/{id}")
-    @PreAuthorize("isAuthenticated()") // Само логнати могат да купуват
+    @PreAuthorize("isAuthenticated()")
     public String buyCandle(@PathVariable("id") UUID candleId,
-                            Principal principal, // Взимаме текущия user автоматично
+                            Principal principal,
                             RedirectAttributes redirectAttributes) {
 
         try {
